@@ -1,0 +1,33 @@
+server:
+  port: 9001
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/payment_db
+    username: root
+    password: admin
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+  application:
+    name: PAYMENT-SERVICE
+  config:
+    import: configserver:http://localhost:9004
+
+resilience4j.ratelimiter:
+  instances:
+    ratelimit:
+      limitForPeriod: 2
+      limitRefreshPeriod: 5s
+      timeoutDuration: 0
+      #eureka:
+      #   client:
+      #     fetch-registry: true
+      #     register-with-eureka: true
+      #      service-url:
+      #        defaultZone: http://localhost:8761/eureka
+      #  instance:
+      #     prefer-ip-address: true
+
